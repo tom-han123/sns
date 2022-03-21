@@ -1,0 +1,164 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+   .part-1{
+  display: grid;
+  grid-gap: 10rem;
+  grid-template-columns:1fr 1fr 1fr;
+  margin: 2rem 0;
+}
+
+.part-1 .content{
+  text-align: center;
+  border: var(--color-white) 1px solid;
+  border-radius: 0.3rem;
+  opacity: 100%;
+  border: var(--color-white) 10px solid;
+  border-radius: 10px;
+   
+}
+
+.part1 form{
+  background-color: var(--color-white);
+  height: 6rem;
+  text-align: center;
+  padding: 1rem 0;
+  margin-bottom: 3rem;
+}
+
+.part1 form label{
+  margin:0 1rem;
+  font-size: 2rem;
+}
+
+.part1 form select{
+  width:10%;
+}
+
+.part1 form input{
+  font-size: 1.5rem;
+}
+
+.part1 form button{
+  margin:0 1rem;
+  width: 8%;
+  font-size: 1.5rem;
+  
+}
+
+.part-1 .content h1{
+  padding: 1rem 0;
+  padding-left: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  font-size: 2.5rem;
+  border-bottom: var(--color-gray-dark) 1px solid;
+
+}
+
+.part-1 .content h2{
+  
+  padding-left: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  
+
+}
+
+.filter{
+  width: 100%;
+  height: 6rem;
+  margin-bottom: 2rem;
+  background-color: var(--color-white);
+}
+
+.filter form{
+  width: 100%;
+ margin-left: 1.5rem;
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  padding: 2rem 0;
+  color: var(--color-gray-dark);
+}
+
+.btn-search{
+  border: none;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  font-size: 2rem;
+  width: 8rem;
+}
+
+</style>
+
+<div class="part-1">
+    <div class="content white">
+        <h1>Customer:</h1>
+        <a class="btn btn-lg" href="{% url 'base:update-customer' customer.id %}">Update Customer</a>
+        <a class="btn btn-lg" href="{% url 'base:create-order' customer.id %}">Place Order</a>
+    </div>
+
+    <div class="content white">
+        <h1>Contact Information:</h1>
+        <h2>Email: {{customer.email}}</h2>
+        <h2>Phone: {{customer.phone}}</h2>
+    </div>
+
+    <div class="content white">
+        <h1>Total Orders</h1>
+        
+        <h3 class="text-lg">{{numbers}}</h3>
+    </div>
+</div>
+
+<div class="filter">
+    <form action="" method="GET">
+        {% for field in myfilter.form%}
+          <label for="">{{field.name}}</label>
+          {{field}}
+        <!-- {{myfilter.form}} -->
+        {% endfor %}
+        <input class="btn-search" type="submit" value="Search">
+    </form>
+</div>
+
+<div class="part1">
+    
+    
+    <table>
+        <tbody>
+            <tr>
+                <th>Model</th>
+                <th>Note</th>
+                <th>Ordered Date</th>
+                <th>Status</th>
+                <th>Quantity</th>
+                <th>Update</th>
+                <th>Remove</th>
+            </tr>
+
+            {% if orders %}
+              {% for order in orders %}
+                    <tr>
+                        <td>{{order.model_id.name}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.date_created}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.quantity}}</td>
+                        <td><a class="btn btn-sm teal" href="{% url 'base:update-order' order.id %}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a class="btn btn-sm warning" href="{% url 'base:delete-order' order.id %}"><i class="fa-solid fa-xmark"></i></a></td>
+                    </tr>
+               {% endfor %} 
+            
+            {% endif %}
+                
+
+            
+
+        </tbody>
+        
+    </table>
+</div>
+{% endblock %}

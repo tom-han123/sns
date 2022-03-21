@@ -1,0 +1,212 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+
+.part-1{
+  display: grid;
+  grid-gap: 10rem;
+  grid-template-columns:1fr 1fr 1fr;
+  margin: 2rem 0;
+}
+
+.part-1 .content{
+  text-align: center;
+  border: var(--color-white) 1px solid;
+  border-radius: 0.3rem;
+  opacity: 100%;
+  border: var(--color-white) 10px solid;
+  border-radius: 10px;
+   
+}
+
+.part1 form{
+  background-color: var(--color-white);
+  height: 6rem;
+  text-align: center;
+  padding: 1rem 0;
+  margin-bottom: 3rem;
+}
+
+.part1 form label{
+  margin:0 1rem;
+  font-size: 2rem;
+}
+
+.part1 form select{
+  width:10%;
+}
+
+.part1 form input{
+  font-size: 1.5rem;
+}
+
+.part1 form button{
+  margin:0 1rem;
+  width: 8%;
+  font-size: 1.5rem;
+  
+}
+
+
+
+.part-1 .content p{
+  padding: 2rem;
+  color: var(--color-white);
+  font-size: 2.5rem;
+}
+
+.part-1 .content h1{
+  padding: 1rem 0;
+  padding-left: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  font-size: 2.5rem;
+  border-bottom: var(--color-gray-dark) 1px solid;
+
+}
+
+.part-1 .content h2{
+  
+  padding-left: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  
+
+}
+
+.part-1 .content p:first-child{
+  border-bottom: var(--color-gray-dark) 1px solid;
+}
+
+
+.part2{
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: 1fr 3fr;
+  margin-top: 3rem;
+}
+
+.part2-content-1 p{
+
+  border-bottom: black 1px solid;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.part2-content-1 .customer-list{
+  background-color: var(--color-white);
+  padding: 1rem;
+}
+
+.part2-content-1 img{
+  width: 300px;
+  height: 300px;
+  margin-top: 0.5rem;
+}
+
+.part2-content-2 p{
+
+  border-bottom: black 1px solid;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.part2-content-2 .order-list{
+  background-color: var(--color-white);
+  padding: 1rem;
+}
+
+</style>
+
+    <div class="part-1">
+        <div class="content cyan">
+            <p>Total Orders</p>
+            <p>{{total_order.count}}</p>
+        </div>
+
+        <div class="content cyan">
+            <p>Orders Delivered</p>
+            <p>{{delivered}}</p>
+        </div>
+
+        <div class="content cyan">
+            <p>Orders Pending</p>
+            
+            <p>{{pending}}</p>
+        </div>
+    </div>
+
+    <div class="part2">
+        <div class="part2-content-1">
+            <p class="text-md">CUSTOMERS: {{customers.count}}</p>
+            <div class="customer-list">
+                
+                <table>
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                        </tr>
+                        
+                        {% if customers %}
+                            {% for customer in customers %}
+
+                                <tr>
+                                    <td><a class="btn btn-sm teal" href="{% url 'base:customer' customer.id %}">View</a></td>
+                                    <td>{{customer.name}}</td>
+                                    <td>{{customer.phone}}</td>
+                                </tr>
+                            {% endfor %}
+                        
+                        {% endif %}   
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+        <div class="part2-content-2">
+            <p class="text-md">ORDERS:</p>
+            <div class="order-list">
+                
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Model</th>
+                            <th>Customer</th>
+                            <th>Quantity</th>
+                            <th>Ordered Date</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                            <th>Remove</th>
+                        </tr>
+
+                        {% if total_order %}
+                          {% for order in total_order %}
+                                <tr>
+                                    <td>{{order.model_id.name}}</td>
+                                    <td>{{order.customer.name}}</td>
+                                    <td>{{order.quantity}}</td>
+                                    <td>{{order.date_created}}</td>
+                                    <td>{{order.status}}</td>
+                                    <td><a class="btn btn-sm teal" href="{% url 'base:update-order' order.id %}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td><a class="btn btn-sm warning" href="{% url 'base:delete-order' order.id %}"><i class="fa-solid fa-xmark"></i></a></td>
+                                </tr>
+                           {% endfor %} 
+                        
+                        {% endif %}
+                            
+
+                        
+
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

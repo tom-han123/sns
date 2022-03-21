@@ -1,0 +1,110 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+
+.part2{
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: 1fr 2fr;
+  margin-top: 3rem;
+}
+
+.part2-content-1 .model-overview{
+    margin-top: 1rem;
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.part2-content-1 .model-overview div{
+   
+    height: 8rem;
+    padding: 2rem 1rem;
+    background-color: var(--color-white)
+    
+}
+
+.part2-content-1 .model-overview div:hover{
+    background-color: var(--color-light);
+}
+
+.part2-content-1 .model-overview div a{
+    color: var(--color-gray-dark);
+}
+
+
+.part2-content-1 .model-overview div{
+    text-align: center;
+}
+
+.part2-content-1 img{
+    width: 100px;
+    height: 80px;
+}
+
+.part2-content-2 p{
+
+  border-bottom: black 1px solid;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+</style>
+
+<div class="part2">
+    <div class="part2-content-1">
+        <h1 class="text-md">Model Overview</h1>
+        <div class="model-overview">
+            
+            {% for typee in types %}
+                <div>
+                    <a class="text-md" href="{% url 'base:bikes'%}?q={{typee.id}}">
+                    {{typee.name}}
+                    </a>
+                </div>
+            
+            {% endfor %}
+
+        </div>
+           
+    </div>
+
+    <div class="part2-content-2">
+        <p class="text-md">Bikes:</p>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Model</th>
+                    <th>Base Prize($)</th>
+                    <th>Prize($)</th>
+                    <th>Quantity</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                    <th></th>
+                </tr>
+                
+                {% if bike_models %}
+                    {% for model in bike_models %}
+
+                        <tr>
+                            <td>{{model.name}}</td>
+                            <td>{{model.base_prize}}</td>
+                            <td>{{model.prize}}</td>
+                            <td>{{model.quantity}}</td>
+                            <td><a class="btn btn-sm teal" href="{% url 'base:update-bike' model.id %}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td><a class="btn btn-sm warning" href="{% url 'base:delete-bike' model.id %}"><i class="fa-solid fa-xmark"></i></a></td>
+                            <td><a class="btn btn-sm teal" href="{% url 'base:bike-details' model.id %}">More <i class="fa-solid fa-angles-right"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                
+                {% endif %}   
+            </tbody>
+            
+        </table>
+        
+    </div>
+</div>
+{% endblock %}

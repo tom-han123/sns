@@ -1,0 +1,24 @@
+<style>
+    .nav-bar i{
+        color: var(--color-white);
+    }
+</style>
+<nav>
+    <div class="nav-bar">
+        <div>
+            <a class="text-lg" href="">S&S</a>
+            
+                <a class="text-md" href="{% url 'base:dashboard'%}">Dashboard</a>
+                <a class="text-md" href="{% url 'base:bikes' %}">Bikes</a>
+
+        </div>
+        <div>
+            
+            <a href="{% url 'base:logout' %}"><i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i></a>
+        </div>
+        
+    
+        
+    </div>
+    
+</nav>

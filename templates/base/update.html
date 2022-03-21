@@ -1,0 +1,89 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+.update-form{
+  width: 60%;
+  margin: auto;
+  margin-top: 4rem;
+  border-bottom: var(--color-gray-dark) 4px solid;
+}
+
+.update-form .header{
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.5rem;
+}
+
+.update-form .header hr{
+  margin: 2rem 0;
+}
+
+.update-form .header h1{
+  font-size: 3rem;
+  text-align: center;
+}
+
+form{
+  width: 90%;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+
+form div{
+  width: 98%;
+  margin: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+
+.btn{
+  width: 80%;
+  height: 3rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: auto;
+  color: var(--color-dark);
+  border: none;
+  background-color: var(--color-blue);
+  
+}
+
+.btn:hover{
+  background-color: #ddd;
+}
+
+
+</style>
+
+<div class="update-form">
+  <div class="header">
+    <hr>
+    <h1>Update</h1>
+    <hr>
+
+  </div>
+  
+    
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.management_form}}
+        {%for field in form %}
+          <div>
+            <label for="">{{field.name}} :</label>
+            {{field}}
+
+          </div>
+        {% endfor %}    
+
+
+        <input type="submit" class="btn" value="submit">
+    </form>
+</div>
+
+{% endblock %}
